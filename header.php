@@ -4,6 +4,8 @@
  * Header
  * Campus Crusade for Christ
  */
+require_once("config.inc.php"); 
+require_once("Database.singleton.php");
 
 if (!isset($_SESSION)) {
   ini_set('session.gc_maxlifetime', 7200);
@@ -32,10 +34,70 @@ if(isset($_SESSION['email'])) {
     $type       = isset($_SESSION['type']) ? $_SESSION['type']      : '';
     $status     = isset($_SESSION['status']) ? $_SESSION['status']  : '';
     $userMessage= 'Welcome '.$fname.'!';
-} 
+} else {
+    require('CAS.php');
+    phpCAS::client(CAS_VERSION_2_0, 'signin.dodomail.net', 443, '/cas', false /* set to TRUE if the app does not handle its own session */);
+    phpCAS::setNoCasServerValidation();  // don't check server SSL certificate
 
-require_once("config.inc.php"); 
-require_once("Database.singleton.php");
+    //// Get user identity
+
+    phpCAS::forceAuthentication(); // this will redirect to login page if needed
+
+    // CAS username
+    $casUsername = phpCAS::getUser();
+
+    // CAS GUID (may be different from username)
+    $attributes = phpCAS::getAttributes(); 
+    $casGUID = $attributes['eaguid'];
+    $email = $attributes['defaultmail'];
+    
+    try{
+    	//initialize the database object
+    	$db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+    	$db->connect();
+    
+    	//verify that user exists (login)
+    	$sql = "SELECT * FROM user WHERE Email = '".$db->escape($email)."'";
+
+    	//get results
+    	$result = $db->query_first($sql);        
+
+    	//check result to verify login
+    	if($result == 0) {
+    		$data['Email']      = $attributes['defaultmail'];
+         	$data['FName']      = $attributes['givenname'];
+         	$data['LName']      = $attributes['surname'];
+         	$data['Password']   = 'password';
+         	$data['Type']       = '4';
+         	$data['Region']     = '4';
+        	$data['Reg_Date']   = date('Ymd');
+         	$data['Reg_Status']     = ACTIVE;
+
+         	//execute query
+        	 $db->insert("user", $data);
+    	} else {
+    		$email = $result['Email'];
+    		$fname = $result['FName'];
+    		$lname = $result['LName'];
+    		$type = $result['Type'];
+    		$status = $result['Reg_Status'];
+    	}
+    	
+    	$db->close();
+    
+    	$loggedin   = true;
+    	$_SESSION['email']  = $email;
+    	$_SESSION['fname']  = $fname;
+    	$_SESSION['lname']  = $lname;
+    	$_SESSION['type']   = $type;
+    	$_SESSION['region'] = '4';
+    	$_SESSION['status'] = $status;
+    	$userMessage= 'Welcome '.$fname.'!';
+	}
+	catch (PDOException $e){
+    	echo $e->getMessage();
+	}
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

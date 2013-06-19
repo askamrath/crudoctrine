@@ -801,7 +801,18 @@ function insertElement($_id, $_type, $_content) {
                 $('#edit_text').val(text);
 
                 //initialize wysiwyg editor
-                $('#edit_text').wysiwyg();
+                $('#edit_text').wysiwyg({
+                       rmUnusedControls: false,
+                       controls: {
+                           separator07: { visible : true },
+                           cut: { visible : true },
+                           copy: { visible : true },
+                           paste: { visible : true },
+                           increaseFontSize: { visible : true },
+                           decreaseFontSize: { visible : true },
+                           html: { visible : true }
+                       }
+                });
                 $('.wysiwyg').css('width','100%');
                 $('iframe').css('width','100%');
                 $('.panel').css('width','100%');
