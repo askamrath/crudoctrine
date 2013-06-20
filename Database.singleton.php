@@ -58,7 +58,7 @@ class Database {
 
 #-#############################################
 # desc: constructor
-private function __construct($server=null, $user=null, $pass=null, $database=null) {
+public function __construct($server=null, $user=null, $pass=null, $database=null) {
     // error catching if not passed in
     if($server==null || $user==null || $database==null) {
         $this->oops("Database information must be passed in when the object is first created.");
@@ -101,10 +101,10 @@ public function connect($new_link=false) {
 	}
 
     // unset the data so it can't be dumped
-    $this->server='';
-    $this->user='';
-    $this->pass='';
-    $this->database='';
+    //$this->server='';
+    //$this->user='';
+    //$this->pass='';
+    //$this->database='';
 }#-#connect()
 
 

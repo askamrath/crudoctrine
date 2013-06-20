@@ -4,9 +4,8 @@
  * Home Page
  * Campus Crusade for Christ
  */
-
-//header
-require('header.php');
+require_once("config.inc.php"); 
+require_once("Database.singleton.php");
 
 try {
     //get modules from db
@@ -38,6 +37,9 @@ catch (PDOException $e) {
     echo $e->getMessage();
 }
 
+//header
+require('header.php');
+
 ?>
 <link rel="stylesheet" type="text/css" media="screen" href="/css/home.css" />
 <div id="content">
@@ -68,7 +70,7 @@ catch (PDOException $e) {
 </div>
 <script type="text/javascript">
   $(function() {
-      $('#module10').css('width', '555px').addClass('active');
+      $('#module11').css('width', '555px').addClass('active');
   });
 
   $('.module').click(function() {

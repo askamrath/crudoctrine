@@ -45,6 +45,7 @@ define("MODULES", "modules");
 define("REPORTS", "reports");
 define("DISCIPLES_REPORT", "disciples_report");
 define("PROGRESS_REPORT", "progress_report");
+define("REDIRECT_URL","http://crudoctrine.test.zteam.biz");
 //define("SMTP_SERVER", "smtp.gmail.com");
 //define("SMTP_PORT", 465);
 //define("SMTP_SSL", "sslv3");

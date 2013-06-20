@@ -24,9 +24,12 @@ $fname       = '';
 $lname       = '';
 $type        = '';
 $status      = '';
+//$status      = ACTIVE;
 $userMessage = '';
+$region      = '';
 
 if(isset($_SESSION['email'])) {
+    echo 'session';
     $loggedin   = true;
     $email      = $_SESSION['email'];
     $fname      = isset($_SESSION['fname']) ? $_SESSION['fname']    : '';
@@ -34,7 +37,7 @@ if(isset($_SESSION['email'])) {
     $type       = isset($_SESSION['type']) ? $_SESSION['type']      : '';
     $status     = isset($_SESSION['status']) ? $_SESSION['status']  : '';
     $userMessage= 'Welcome '.$fname.'!';
-} else {
+}else{
     require('CAS.php');
     phpCAS::client(CAS_VERSION_2_0, 'signin.dodomail.net', 443, '/cas', false /* set to TRUE if the app does not handle its own session */);
     phpCAS::setNoCasServerValidation();  // don't check server SSL certificate
@@ -43,60 +46,52 @@ if(isset($_SESSION['email'])) {
 
     phpCAS::forceAuthentication(); // this will redirect to login page if needed
 
-    // CAS username
-    $casUsername = phpCAS::getUser();
-
     // CAS GUID (may be different from username)
     $attributes = phpCAS::getAttributes(); 
     $casGUID = $attributes['eaguid'];
     $email = $attributes['defaultmail'];
     
-    try{
-    	//initialize the database object
-    	$db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
-    	$db->connect();
+    //initialize the database object
+    $db = Database::obtain(DB_SERVER, DB_USER, DB_PASS, DB_DATABASE);
+    $db->connect();
     
-    	//verify that user exists (login)
-    	$sql = "SELECT * FROM user WHERE Email = '".$db->escape($email)."'";
+    //verify that user exists (login)
+    $sql = "SELECT * FROM user WHERE Email = '".$db->escape($email)."'";
 
-    	//get results
-    	$result = $db->query_first($sql);        
+    //get results
+    $result = $db->query_first($sql);        
 
-    	//check result to verify login
-    	if($result == 0) {
-    		$data['Email']      = $attributes['defaultmail'];
-         	$data['FName']      = $attributes['givenname'];
-         	$data['LName']      = $attributes['surname'];
-         	$data['Password']   = 'password';
-         	$data['Type']       = '4';
-         	$data['Region']     = '4';
-        	$data['Reg_Date']   = date('Ymd');
-         	$data['Reg_Status']     = ACTIVE;
+    //check result to verify login
+    if($result == 0) {
+    	$data['Email']      = $attributes['defaultmail'];
+       	$data['FName']      = $attributes['givenname'];
+       	$data['LName']      = $attributes['surname'];
+       	$data['Password']   = $casGUID;
+       	$data['Type']       = '4';
+       	$data['Region']     = '4';
+       	$data['Reg_Date']   = date('Ymd');
+       	$data['Reg_Status']     = ACTIVE;
 
-         	//execute query
-        	 $db->insert("user", $data);
-    	} else {
-    		$email = $result['Email'];
-    		$fname = $result['FName'];
-    		$lname = $result['LName'];
-    		$type = $result['Type'];
-    		$status = $result['Reg_Status'];
-    	}
+       	//execute query
+         $db->insert("user", $data);
+    } else {
+   		$email = $result['Email'];
+   		$fname = $result['FName'];
+   		$lname = $result['LName'];
+   		$type = $result['Type'];
+   		$status = ACTIVE;
+   	}
     	
-    	$db->close();
+   	$db->close();
     
-    	$loggedin   = true;
-    	$_SESSION['email']  = $email;
-    	$_SESSION['fname']  = $fname;
-    	$_SESSION['lname']  = $lname;
-    	$_SESSION['type']   = $type;
-    	$_SESSION['region'] = '4';
-    	$_SESSION['status'] = $status;
-    	$userMessage= 'Welcome '.$fname.'!';
-	}
-	catch (PDOException $e){
-    	echo $e->getMessage();
-	}
+    $loggedin   = true;
+    $_SESSION['email']  = $attributes['defaultmail'];
+    $_SESSION['fname']  = $attributes['givenname'];
+    $_SESSION['lname']  = $attributes['surname'];
+    $_SESSION['type']   = $type;
+   	$_SESSION['region'] = '4';
+   	$_SESSION['status'] = $status;
+    $userMessage= 'Welcome '.$_SESSION['fname'].'!';
 }
 ?>
 
@@ -129,6 +124,7 @@ if(isset($_SESSION['email'])) {
   <!--CSS-->
   <link rel="stylesheet" type="text/css" media="screen" href="/css/layout.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="/css/print.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="/css/home.css" />
   <!--END CSS-->
 </head>
 
