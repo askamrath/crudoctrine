@@ -4,8 +4,8 @@
  * Home Page
  * Campus Crusade for Christ
  */
-require_once("config.inc.php"); 
-require_once("Database.singleton.php");
+//header
+require('header.php');
 
 try {
     //get modules from db
@@ -37,8 +37,6 @@ catch (PDOException $e) {
     echo $e->getMessage();
 }
 
-//header
-require('header.php');
 
 ?>
 <link rel="stylesheet" type="text/css" media="screen" href="/css/home.css" />

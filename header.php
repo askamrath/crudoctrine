@@ -24,9 +24,7 @@ $fname       = '';
 $lname       = '';
 $type        = '';
 $status      = '';
-//$status      = ACTIVE;
 $userMessage = '';
-$region      = '';
 
 if(isset($_SESSION['email'])) {
     echo 'session';
@@ -70,7 +68,7 @@ if(isset($_SESSION['email'])) {
        	$data['Type']       = '4';
        	$data['Region']     = '4';
        	$data['Reg_Date']   = date('Ymd');
-       	$data['Reg_Status']     = ACTIVE;
+       	$data['Status']     = ACTIVE;
 
        	//execute query
          $db->insert("user", $data);
@@ -89,8 +87,8 @@ if(isset($_SESSION['email'])) {
     $_SESSION['fname']  = $attributes['givenname'];
     $_SESSION['lname']  = $attributes['surname'];
     $_SESSION['type']   = $type;
-   	$_SESSION['region'] = '4';
-   	$_SESSION['status'] = $status;
+    $_SESSION['region'] = '4';
+   	$_SESSION['status'] = ACTIVE;
     $userMessage= 'Welcome '.$_SESSION['fname'].'!';
 }
 ?>

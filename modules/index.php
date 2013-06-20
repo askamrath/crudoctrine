@@ -8,6 +8,9 @@ try {
   //ensure user authentication
   $auth = false;
 
+  //header
+  include('../header.php');
+  
   session_start();
   if(isset($_SESSION['email'])){
     $auth = true;
@@ -240,8 +243,6 @@ catch (PDOException $e) {
 
 $content = $transitionType.'.php';
 
-//header
-include('../header.php');
 
 //content
 ?>
