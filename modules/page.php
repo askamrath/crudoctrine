@@ -148,7 +148,7 @@ function insertElement($_id, $_type, $_content) {
 <script src="/jquery/jQuery-URL-Parser/jquery.url.js" type="text/javascript" charset="utf-8"></script>
 <div id="module<?php echo str_replace('.', '', $module['Number']); ?>" class="page">
     <div id="title">
-        <div id="number">Module <?php echo $module['Number']; ?></div>
+        <div id="number">单元 <?php echo $module['Number']; ?></div>
         <div id="name"><?php echo $module['Name']; ?></div>
     </div>
     <div id="banner">
@@ -215,7 +215,7 @@ function insertElement($_id, $_type, $_content) {
     <div id="bottom">
         <div id="errors"></div>
         <form id="submit" action="#" method="post">
-          <button name="continue" type="submit" class="shadow-light corners-all ui-state-default">Continue<span class="ui-icon ui-icon-triangle-1-e"></span></button>
+          <button name="continue" type="submit" class="shadow-light corners-all ui-state-default">继续<span class="ui-icon ui-icon-triangle-1-e"></span></button>
         </form>
         <div class="clear"></div>
     </div>
