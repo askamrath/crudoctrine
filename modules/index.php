@@ -50,7 +50,7 @@ try {
     if ($mod != '') {
         if($req != '') {
             //page title
-            $title = 'Module '.$mod.' '.$req;
+            $title = '单元 '.$mod.' '.$req; // Module #
             
             //page type
             $transitionType = $req;
@@ -68,7 +68,7 @@ try {
 
             if($db->affected_rows > 0) {
               //page title
-              $title = 'Module '.$module['Number'];
+              $title = '单元 '.$module['Number']; // Module #
 
               //page type
               $transitionType = MODULE;
@@ -109,7 +109,7 @@ try {
         $page['Type']       = $result['Type'];
         
         //page title
-        $title = 'Module '.$module['Number'];
+        $title = '单元 '.$module['Number']; // Module #
         
         //page type
         $transitionType = PAGE;
@@ -145,14 +145,14 @@ try {
         $page['Type']       = $result['Type'];
 
         //page title
-        $title = 'Module '.$module['Number'];
+        $title = '单元 '.$module['Number']; // Module #
 
         //page type
         $transitionType = PAGE;
     } 
     else {
         //page title
-        $title = 'Modules';
+        $title = '单位'; // Modules
 
         //page type
         $transitionType = 'directory';

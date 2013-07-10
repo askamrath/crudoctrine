@@ -13,7 +13,7 @@ if(!$loggedin){
 }
 
 //page title
-$title = 'My Work';
+$title = '我的课程'; // My Work
 
 $modules    = array();
 $progress   = array();
@@ -131,15 +131,16 @@ foreach($_modules as $module) {
   $i++;
   $str_bar .= '<div class="bar '.$module['status'].' '.$bar_class.'" id="'.$module['Ord'].'" style="width:'.$bar_wid.'%;"></div>'.PHP_EOL;
   if($module['status'] == STARTED) {
-    $str_sta = '<div class="name">Module '.number_format($module['Number'], 0).'<br />'.$module['Name'].'</div>
-                <a href="/modules/?p='.$module['page'].'" class="corners-all ui-state-default">Continue<span class="ui-icon ui-icon-triangle-1-e"></span></a>';
+    // Module #
+    $str_sta = '<div class="name">单元 '.number_format($module['Number'], 0).'<br />'.$module['Name'].'</div>
+                <a href="/modules/?p='.$module['page'].'" class="corners-all ui-state-default">继续<!-- Continue --><span class="ui-icon ui-icon-triangle-1-e"></span></a>';
   }
 
   if ($module['status'] != 'incomplete') {
     $str_mod .= '<div class="module" id="'.$module['ID'].'">
                    <div class="name">
                      <span class="ui-icon ui-icon-triangle-1-'.($module['Ord'] == $cur_mod ? 's' : 'e').'"></span>
-                     Module '.number_format($module['Number'], 0).' - '.$module['Name'].'
+                     单元 '.number_format($module['Number'], 0).' - '.$module['Name'].'
                    </div>
                    <span class="check"></span>
                    <div class="flagsnotes '.($module['Ord'] == $cur_mod ? 'active' : '').'">'.PHP_EOL;
@@ -174,7 +175,7 @@ foreach($_modules as $module) {
 <div id="content">
     <div id="work">
         <div id="pagetitle">
-            My Work
+            <?php echo $title; ?>
         </div>
         <div id="contentpane">
             <div id="progress">
@@ -186,7 +187,8 @@ foreach($_modules as $module) {
                     echo '<div id="status" class="corners-all"><div class="point"></div>'.$str_sta.'</div>';
                   }
                   else {
-                    echo '<div id="complete">Congratulations on completing CruDoctrine!</div>';
+                    // Congratulations on completing CruDoctrine
+                    echo '<div id="complete">恭喜完成 CruDoctrine!</div>';
                   }
                 ?>
             </div>

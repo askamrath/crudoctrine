@@ -515,17 +515,20 @@ function insertElement($_id, $_type, $_content) {
                         if(msg == "Response Saved"){
                             //mark input saved
                             input.find('.response').addClass('saved').removeClass('new');
-                            responseAlert(id, 'success', 'Response saved.');
+                            // "Response saved."
+                            responseAlert(id, 'success', '保存你的回应');
                         }else{
                             //notify user that save failed
-                            responseAlert(id, 'error', 'Failed to save response.');
+                            // "Failed to save response."
+                            responseAlert(id, 'error', '不能保存你的回应');
                         }
                     }
                 });
             } 
             else {                        
                 //notify user that reponse is invalid
-                responseAlert(id, 'error', 'Response too short.');
+                // "Response too short."
+                responseAlert(id, 'error', '你的回答是太短');
             }
         }
         else {
@@ -603,7 +606,8 @@ function insertElement($_id, $_type, $_content) {
          $('.input .response').each(function() {
              if(!$(this).hasClass('saved')){
                  //input not saved
-                 errors = 'Please enter a response to the above question(s).<br/>';
+                 // "Please enter a response to the above question(s)"
+                 errors = '请输入对上述问题的回应.<br/>';
              }
          });
        }

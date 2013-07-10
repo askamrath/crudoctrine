@@ -15,7 +15,7 @@ if (!isset($_SESSION)) {
 }
 
 //page title
-$title = 'Welcome';
+$title = '欢迎'; // Welcome
 
 //check for session
 $loggedin    = false;
@@ -34,7 +34,7 @@ if(isset($_SESSION['email'])) {
     $lname      = isset($_SESSION['lname']) ? $_SESSION['lname']    : '';
     $type       = isset($_SESSION['type']) ? $_SESSION['type']      : '';
     $status     = isset($_SESSION['status']) ? $_SESSION['status']  : '';
-    $userMessage= 'Welcome '.$fname.'!';
+    $userMessage= '欢迎 '.$fname.'!'; // Welcome
 }else{
     require('CAS.php');
     phpCAS::client(CAS_VERSION_2_0, 'signin.dodomail.net', 443, '/cas', false /* set to TRUE if the app does not handle its own session */);
@@ -89,7 +89,7 @@ if(isset($_SESSION['email'])) {
     $_SESSION['type']   = $type;
     $_SESSION['region'] = '4';
    	$_SESSION['status'] = ACTIVE;
-    $userMessage= 'Welcome '.$_SESSION['fname'].'!';
+    $userMessage= '欢迎 '.$_SESSION['fname'].'!'; // Welcome
 }
 ?>
 
@@ -146,7 +146,7 @@ if(isset($_SESSION['email'])) {
                 <div id="tab"></div>
             </div>
             <div id="loginbox" class="ui-corner-top">
-                <?php echo $loggedin ? $userMessage.' | <a href="/logout.php" id="logout">LOG OUT</a>' : '<a href="/login.php" id="login">LOG IN</a> | <a href="/register.php" id="register">REGISTER</a>'; ?>
+                <?php echo $loggedin ? $userMessage.' | <a href="/logout.php" id="logout">退出</a>' : '<a href="/login.php" id="login">登录</a> | <a href="/register.php" id="register">注册</a>'; ?>
             </div>
         </div>
         <!--END USERBOX-->
@@ -154,24 +154,24 @@ if(isset($_SESSION['email'])) {
           if($loggedin) {
             //echo '<div class="option" ><a href="profile/">MY PROFILE</a></div>';
             echo '<div id="hometab" class="option">
-                    <a id="home" href="/">HOME</a>
+                    <a id="home" href="/">主页</a>
                   </div>
                    <div id="myprofiletab" class="option">
                     <a id="myprofile" href="/profile">MY PROFILE</a>
                   </div>
                    <div id="myworktab" class="option">
-                    <a id="mywork" href="/work">MY WORK</a>
+                    <a id="mywork" href="/work">我的课程</a>
                   </div>
                   <!--div id="communitytab" class="option">
-                    <a id="community" href="/">COMMUNITY</a>
+                    <a id="community" href="/">社区</a>
                   </div>
                   <div id="resourcestab" class="option">
-                    <a id="resources" href="/">RESOURCES</a>
+                    <a id="resources" href="/">资源</a>
                   </div-->';
-            echo (($type == SUPER || $type == REGIONAL_ADMIN || $type == COACH) && $status == ACTIVE) ? '<div id="admintab" class="option"><a id="admin" href="/admin">ADMIN</a></div>' : '';
+            echo (($type == SUPER || $type == REGIONAL_ADMIN || $type == COACH) && $status == ACTIVE) ? '<div id="admintab" class="option"><a id="admin" href="/admin">管理员</a></div>' : '';
           }
         ?>
-        <div id="abouttab" class="option" ><a id="about" href="/about.php">ABOUT</a></div>
+        <div id="abouttab" class="option" ><a id="about" href="/about.php">关于</a></div>
     </div>
     <!--ENDS NAVBAR-->
    </div>

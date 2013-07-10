@@ -7,12 +7,12 @@
 
   echo  '  <div id="footer">';
   echo  '    <div id="CCC">&copy; '.date("Y").' Campus Crusade for Christ</div>';
-  echo  '    <div id="links">
+  echo  '    <!-- <div id="links">
                <a href="http://www.ccci.org/about-us/policies/terms-of-use/index.htm">Terms of Use</a><a href="http://www.ccci.org/about-us/policies/Privacy-policy/index.htm"> | Privacy Policy</a>
-             </div>';
+             </div> -->';
   if($loggedin) {
     echo '   <div id="links">
-               <a href="/">Home</a><a href="/work"> | My Work</a><!--a href="/"> | Online Community</a><a href="/">| Featured Resources</a-->
+               <a href="/">主页</a><a href="/work"> | 我的课程</a><!--a href="/"> | Online Community</a><a href="/">| Featured Resources</a-->
              </div>';
   }
   echo  '  </div>
